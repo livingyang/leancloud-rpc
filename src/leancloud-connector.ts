@@ -20,6 +20,7 @@ export class LeancloudConnector {
     appid = "EWD3oUAoB7mH0Griucaw74i7-gzGzoHsz";
     appkey = "vIoq3QeLbS8TtHYwcCdcvaOQ";
     server = "https://ewd3ouao.api.lncld.net/1.1/";
+    rpcUrl = "http://localhost:3000/1.1/functions/rpc";
     _user: LeancloudClass._User | null = null;
     rpc = new LeancloudRpc;
     
@@ -35,25 +36,23 @@ export class LeancloudConnector {
             (LeancloudRpcClient.prototype as any)[method] = (...params: any[]) => {
                 return new Promise((resolve, reject) => {
                     let xhr = new XMLHttpRequest;
-                    xhr.open('POST', this.server + 'functions/rpc');
+                    xhr.open('POST', this.rpcUrl);
                     xhr.setRequestHeader("Content-Type", "application/json");
                     xhr.setRequestHeader("x-lc-id", this.appid);
                     xhr.setRequestHeader("x-lc-key", this.appkey);
                     xhr.setRequestHeader("X-LC-Session", this.getSessionToken());
                     xhr.send(JSON.stringify({method: method, params: params}));
                     xhr.onload = () => {
-                        if (xhr.status === 200) {
-                            let obj = JSON.parse(xhr.responseText)
-                            if (obj.error) {
-                                reject(obj.error);
-                            }
-                            else if (obj.result) {
-                                resolve(obj.result);
-                            }
-                            else {
-                                reject(LeancloudRpcError.ParseError);
-                            }
-                        };
+                        let obj = JSON.parse(xhr.responseText)
+                        if (obj.error != null) {
+                            reject(obj.error);
+                        }
+                        else if (obj.result != null) {
+                            resolve(obj.result);
+                        }
+                        else {
+                            reject(LeancloudRpcError.ParseError);
+                        }
                     };
                     xhr.onerror = () => {
                         reject(LeancloudRpcError.InvalidRequest);
