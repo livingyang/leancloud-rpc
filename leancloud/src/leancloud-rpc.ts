@@ -1,3 +1,9 @@
+/**
+ * FOR BOTH
+ * leancloud rpc
+ * define rpc api
+ */
+
 import {LeancloudRpcError} from './leancloud-rpc-error';
 
 export class LeancloudRpc {

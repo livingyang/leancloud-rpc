@@ -1,3 +1,8 @@
+/** 
+ * FOR BOTH
+ * define leancloud rpc error code
+*/
+
 export enum LeancloudRpcError {
     ParseError = -32700, // An error occurred on the server while parsing the JSON text.
     InternalError = -32603,	// Internal JSON-RPC error.

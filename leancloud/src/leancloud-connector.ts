@@ -1,8 +1,13 @@
-import {LeancloudRpc} from './leancloud-rpc';
-import { LeancloudRpcError } from './leancloud-rpc-error';
+/**
+ * FOR CLIENT
+ * leancloud connect
+ * 1 login to server
+ * 2 register user
+ * 3 attach rpc api to server
+ */
 
-// leancloud的连接器，提供注册和登录功能
-// 登录完毕后，获取rpc对象，通过rpc与服务器进行通信
+import {LeancloudRpc} from './leancloud-rpc';
+import {LeancloudRpcError} from './leancloud-rpc-error';
 
 export namespace LeancloudClass {
     export interface _User {
@@ -17,18 +22,29 @@ export namespace LeancloudClass {
 }
 
 export class LeancloudConnector {
-    appid = "EWD3oUAoB7mH0Griucaw74i7-gzGzoHsz";
-    appkey = "vIoq3QeLbS8TtHYwcCdcvaOQ";
-    server = "https://ewd3ouao.api.lncld.net/1.1/";
-    rpcUrl = "http://localhost:3000/1.1/functions/rpc";
+    appid = '';
+    appkey = '';
+    server = '';
+    rpcUrl = '';
     _user: LeancloudClass._User | null = null;
     rpc = new LeancloudRpc;
     
     static Instance = new LeancloudConnector();
 
+    setAppInfo(appid: string, appkey: string, useLocalhost = false) {
+        this.appid = appid;
+        this.appkey = appkey;
+        let appidShort = this.appid.substr(0, 8);
+
+        this.rpcUrl = useLocalhost
+        ? "http://localhost:3000/1.1/functions/rpc"
+        : `https://${appidShort}.engine.lncld.net/1.1/functions/rpc`;
+
+        this.server = `https://${appidShort}.api.lncld.net/1.1/`;
+    }
+
     attachRpc() {
         class LeancloudRpcClient extends LeancloudRpc {}
-        console.log(LeancloudRpcClient.prototype);
 
         Object.getOwnPropertyNames(LeancloudRpc.prototype).filter(function(name) {
             return name !== 'constructor';

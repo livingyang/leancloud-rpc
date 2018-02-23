@@ -7,6 +7,7 @@ let testUser = '55a47496e4b05001a7732c5f';
 let password = 'password';
 
 beforeAll((done) => {
+    LeancloudConnector.Instance.setAppInfo('EWD3oUAoB7mH0Griucaw74i7-gzGzoHsz', 'vIoq3QeLbS8TtHYwcCdcvaOQ', true);
     LeancloudConnector.Instance.login(testUser, password).then(() => {
         done();
     }).catch((error) => {
