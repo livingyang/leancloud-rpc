@@ -17,7 +17,7 @@ Cloud.define('rpc', function(request: Cloud.CloudFunctionRequest): any {
         if (request.params) {
             let method = request.params['method'];
             let params = request.params['params'];
-            
+
             if (typeof method != 'string') {
                 return Promise.reject(LeancloudRpcError.MethodNotFound);
             }

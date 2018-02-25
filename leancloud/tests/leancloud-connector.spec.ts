@@ -71,10 +71,15 @@ test('LeancloudConnector.rpc', (done) => {
 
 test('LeancloudConnector.attachRpc', (done) => {
     LeancloudConnector.Instance.attachRpc();
-    let multi = new MultiDone(done, 5);
+    let multi = new MultiDone(done, 6);
     
     LeancloudConnector.Instance.rpc.hello().then((result) => {
         expect(result).toBe('hello world');
+        multi.check();
+    });
+
+    LeancloudConnector.Instance.rpc.helloError().catch((error: LeancloudRpcError) => {
+        expect(error).toBe(LeancloudRpcError.HelloError);
         multi.check();
     });
 
@@ -95,7 +100,6 @@ test('LeancloudConnector.attachRpc', (done) => {
     });
 
     LeancloudConnector.Instance.rpc.getDateTime().then((result) => {
-        console.log(result);
         expect(typeof result).toBe('string');
         multi.check();
     });

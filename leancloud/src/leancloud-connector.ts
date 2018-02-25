@@ -58,15 +58,19 @@ export class LeancloudConnector {
                     xhr.setRequestHeader("x-lc-key", this.appkey);
                     xhr.setRequestHeader("X-LC-Session", this.getSessionToken());
                     xhr.send(JSON.stringify({method: method, params: params}));
-                    xhr.onload = () => {
-                        let obj = JSON.parse(xhr.responseText)
-                        if (obj.error != null) {
-                            reject(obj.error);
-                        }
-                        else if (obj.result != null) {
-                            resolve(obj.result);
-                        }
-                        else {
+                    xhr.onload = function() {
+                        try {
+                            let obj = JSON.parse(xhr.responseText)
+                            if (obj.error != null) {
+                                reject(obj.error);
+                            }
+                            else if (obj.result != null) {
+                                resolve(obj.result);
+                            }
+                            else {
+                                reject(LeancloudRpcError.ParseError);
+                            }
+                        } catch (error) {
                             reject(LeancloudRpcError.ParseError);
                         }
                     };
