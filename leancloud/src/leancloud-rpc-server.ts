@@ -20,4 +20,7 @@ export class LeancloudRpcServer extends LeancloudRpc {
     getUserCount() {
         return new Query('_user').count() as any;
     }
+    getDateTime() {
+        return Promise.resolve((new Date).toString());
+    }
 }

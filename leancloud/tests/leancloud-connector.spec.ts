@@ -36,7 +36,7 @@ class MultiDone {
 }
 
 test('LeancloudConnector.rpc', (done) => {
-    let multi = new MultiDone(done, 5);
+    let multi = new MultiDone(done, 6);
 
     LeancloudConnector.Instance.rpc.hello().then((result) => {
         expect(result).toBe('hello world');
@@ -62,11 +62,16 @@ test('LeancloudConnector.rpc', (done) => {
         expect(result).toBe(0);
         multi.check();
     });
+
+    LeancloudConnector.Instance.rpc.getDateTime().then((result) => {
+        expect(typeof result).toBe('string');
+        multi.check();
+    });
 })
 
 test('LeancloudConnector.attachRpc', (done) => {
     LeancloudConnector.Instance.attachRpc();
-    let multi = new MultiDone(done, 4);
+    let multi = new MultiDone(done, 5);
     
     LeancloudConnector.Instance.rpc.hello().then((result) => {
         expect(result).toBe('hello world');
@@ -86,6 +91,12 @@ test('LeancloudConnector.attachRpc', (done) => {
     LeancloudConnector.Instance.rpc.getUserCount().then((result) => {
         // console.log(result);
         expect(result).toBeGreaterThan(0);
+        multi.check();
+    });
+
+    LeancloudConnector.Instance.rpc.getDateTime().then((result) => {
+        console.log(result);
+        expect(typeof result).toBe('string');
         multi.check();
     });
 })

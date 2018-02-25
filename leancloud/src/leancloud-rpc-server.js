@@ -17,5 +17,8 @@ class LeancloudRpcServer extends leancloud_rpc_1.LeancloudRpc {
     getUserCount() {
         return new leancloud_storage_1.Query('_user').count();
     }
+    getDateTime() {
+        return Promise.resolve((new Date).toString());
+    }
 }
 exports.LeancloudRpcServer = LeancloudRpcServer;

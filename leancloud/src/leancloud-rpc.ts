@@ -26,4 +26,8 @@ export class LeancloudRpc {
     getUserCount() {
         return Promise.resolve(0);
     }
+
+    getDateTime() {
+        return Promise.resolve('Now');
+    }
 }
