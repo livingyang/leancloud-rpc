@@ -9,6 +9,8 @@ let password = 'password';
 beforeAll((done) => {
     LeancloudConnector.Instance.setAppInfo('EWD3oUAoB7mH0Griucaw74i7-gzGzoHsz', 'vIoq3QeLbS8TtHYwcCdcvaOQ', true);
     LeancloudConnector.Instance.login(testUser, password).then(() => {
+        console.log('Login success');
+        console.log(LeancloudConnector.Instance._user);
         done();
     }).catch((error) => {
         console.log(error);

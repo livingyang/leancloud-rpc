@@ -1,4 +1,8 @@
 "use strict";
+/**
+ * FOR BOTH
+ * define leancloud rpc error code
+*/
 Object.defineProperty(exports, "__esModule", { value: true });
 var LeancloudRpcError;
 (function (LeancloudRpcError) {

@@ -1,4 +1,9 @@
 "use strict";
+/**
+ * FOR SERVER
+ * leancloud rpc server
+ * implement rpc functions
+ */
 Object.defineProperty(exports, "__esModule", { value: true });
 const leancloud_rpc_1 = require("./leancloud-rpc");
 const leancloud_storage_1 = require("leancloud-storage");

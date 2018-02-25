@@ -1,4 +1,9 @@
 "use strict";
+/**
+ * FOR BOTH
+ * leancloud rpc
+ * define rpc api
+ */
 Object.defineProperty(exports, "__esModule", { value: true });
 const leancloud_rpc_error_1 = require("./leancloud-rpc-error");
 class LeancloudRpc {

@@ -17,16 +17,20 @@ Cloud.define('rpc', function(request: Cloud.CloudFunctionRequest): any {
         if (request.params) {
             let method = request.params['method'];
             let params = request.params['params'];
-            if (method && params) {
-                if (rpc[method]) {
+            
+            if (typeof method != 'string') {
+                return Promise.reject(LeancloudRpcError.MethodNotFound);
+            }
+            else if (!(params instanceof Array)) {
+                return Promise.reject(LeancloudRpcError.InvalidParams);
+            }
+            else {
+                if (rpc[method] instanceof Function) {
                     return rpc[method](...params);
                 }
                 else {
                     return Promise.reject(LeancloudRpcError.MethodNotFound);
                 }
-            }
-            else {
-                return Promise.reject(LeancloudRpcError.InvalidParams);
             }
         }
         else {
